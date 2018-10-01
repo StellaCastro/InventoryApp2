@@ -4,4 +4,8 @@
     <string name="delete_all">Delete all</string>
     <string name="delete">Delete</string>
     <string name="save">save</string>
+    <string name="cant_save">Ups... we couldn\'t save data</string>
+    <string name="save_sucessfull">Item successfully save with id:</string>
+    <string name="add_item_title">Add Item</string>
+    <string name="edit_item_title">Edit Item</string>
 </resources>

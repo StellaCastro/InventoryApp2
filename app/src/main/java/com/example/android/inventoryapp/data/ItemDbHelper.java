@@ -17,13 +17,13 @@ public class ItemDbHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase itemDb) {
-        String SQL_CREATE_ITEMS_TABLE = "CREATE TABLE " + ItemEntry.TABLE_NAME + "("
+        String SQL_CREATE_ITEMS_TABLE = " CREATE TABLE " + ItemEntry.TABLE_NAME + " ( "
                 + ItemEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT , "
                 + ItemEntry.COLUMN_ITEM_NAME  + " TEXT NOT NULL , "
                 + ItemEntry.COLUMN_ITEM_PRICE + " INTEGER NOT NULL , "
                 + ItemEntry.COLUMN_ITEM_QUANTITY + " INTEGER NOT NULL DEFAULT 1 , "
-                + ItemEntry.COLUMN_ITEM_CONTACT + " TEXT NOT NULL, "
-                + ItemEntry.COLUMN_ITEM_SELLER + " TEXT NOT NULL " + " )";
+                + ItemEntry.COLUMN_ITEM_CONTACT + " TEXT NOT NULL , "
+                + ItemEntry.COLUMN_ITEM_SELLER + " TEXT NOT NULL " + " ) ";
         itemDb.execSQL(SQL_CREATE_ITEMS_TABLE);
     }
 

@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#FFD6CE"
     tools:context=".ItemEditorActivity">
 
     <LinearLayout
@@ -80,7 +81,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Price"
+                android:hint="Contact Number"
                 android:layout_margin="@dimen/margin16"
                 android:id="@+id/item_supplier_contact"
                 android:inputType="number"/>
