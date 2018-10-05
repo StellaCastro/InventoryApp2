@@ -16,8 +16,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ItemEditorActivity" />
-        <activity android:name=".Item_viewer"></activity>
+        <activity
+            android:name=".Item_viewer">
+        </activity>
+        <activity
+            android:name=".ItemEditorActivity">
+        </activity>
+        <provider
+            android:authorities="com.example.android.inventoryapp"
+            android:name=".data.ItemProvider"
+            android:exported="false"/>
     </application>
 
 </manifest>

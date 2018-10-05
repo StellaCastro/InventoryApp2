@@ -5,13 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#A0FBFF"
+    android:background="@color/babyblue"
     tools:context=".ItemCatalogActivity">
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
+        android:dividerHeight="1dp"
+        android:divider="@color/black"
         android:id="@+id/list">
     </ListView>
     <RelativeLayout
@@ -34,9 +36,9 @@
             android:layout_below="@+id/empty_warehouse_image"
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif-medium"
-            android:paddingTop="16dp"
-            android:text="Lots of bugs in the warehouse"
-            android:textColor="#000000"
+            android:paddingTop="@dimen/margin16"
+            android:text="@string/empty_messege"
+            android:textColor="@color/black"
             android:textAppearance="?android:textAppearanceMedium"/>
 
         <TextView
@@ -46,10 +48,10 @@
             android:layout_below="@+id/empty_title_text"
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif"
-            android:paddingTop="8dp"
-            android:text="Let's start adding some items"
+            android:paddingTop="@dimen/marging_8"
+            android:text="@string/lets_start"
             android:textAppearance="?android:textAppearanceSmall"
-            android:textColor="#000000"/>
+            android:textColor="@color/black"/>
     </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
@@ -57,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/margin16"
         android:src="@drawable/ic_control_point_black_24dp" />
 
 </LinearLayout>

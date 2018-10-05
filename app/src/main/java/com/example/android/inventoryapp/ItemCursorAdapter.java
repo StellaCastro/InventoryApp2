@@ -24,7 +24,7 @@ public class ItemCursorAdapter extends CursorAdapter {
 
         TextView nameViewItem = (TextView)view.findViewById(R.id.object_name);
         TextView priceViewItem = (TextView)view.findViewById(R.id.object_price);
-        TextView quantityViewItem = (TextView)view.findViewById(R.id.object_quantity);
+        TextView quantityViewItem = (TextView)view.findViewById(R.id.object_number);
 
         int nameColumnIndex = cursor.getColumnIndex(ItemEntry.COLUMN_ITEM_NAME);
         int priceColumnIndex = cursor.getColumnIndex(ItemEntry.COLUMN_ITEM_PRICE);

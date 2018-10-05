@@ -43,7 +43,7 @@ public class ItemEditorActivity extends AppCompatActivity
     private EditText itemSupplierContactEditText;
 
     private boolean mItemHasChanged = false;
-
+    //setting up the touch listener
     private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -56,10 +56,10 @@ public class ItemEditorActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_editor);
-
+    //receiving the intent information
         Intent intent = getIntent();
         mCurrentItemUri = intent.getData();
-
+        //changing tittle in the editor activity
         if(mCurrentItemUri==null){
             setTitle(getString(R.string.add_item_title));
             invalidateOptionsMenu();
@@ -76,7 +76,7 @@ public class ItemEditorActivity extends AppCompatActivity
         itemQuantityEditText = (EditText)findViewById(R.id.item_quantity);
         itemSupplierNameEditText = (EditText)findViewById(R.id.item_supplier_name);
         itemSupplierContactEditText = (EditText)findViewById(R.id.item_supplier_contact);
-
+        //setting touch listener on each editText in the layout
         itemNameEditText.setOnTouchListener(mTouchListener);
         itemPriceEditText.setOnTouchListener(mTouchListener);
         itemQuantityEditText.setOnTouchListener(mTouchListener);
@@ -104,7 +104,7 @@ public class ItemEditorActivity extends AppCompatActivity
         values.put(ItemEntry.COLUMN_ITEM_QUANTITY, quantity);
         values.put(ItemEntry.COLUMN_ITEM_SELLER, itemSupplierName);
         values.put(ItemEntry.COLUMN_ITEM_CONTACT, itemSupplierContact);
-
+    //leting know the uset that the item was saved sucessfully
         if(mCurrentItemUri == null){
             Uri myNewUri = getContentResolver().insert(ItemEntry.CONTENT_URI, values);
             if(myNewUri == null){
@@ -298,7 +298,7 @@ public class ItemEditorActivity extends AppCompatActivity
         alertDialog.show();
     }
     private void deleteItem() {
-        // Only perform the delete if this is an existing pet.
+        // Only perform the delete if this is an existing items
         if (mCurrentItemUri != null) {
             // Call the ContentResolver to delete the pet at the given content URI.
             // Pass in null for the selection and selection args because the mCurrentPetUri

@@ -16,7 +16,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Item Name:"
+                android:text="@string/item_name"
                 android:textSize="25sp"
                 android:gravity="center"/>
             <TextView
@@ -39,7 +39,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Item Price:"
+                    android:text="@string/item_price"
                     android:textSize="25sp"
                     android:gravity="center"/>
                 <TextView
@@ -58,7 +58,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Item Seller:"
+                    android:text="@string/item_seller"
                     android:textSize="25sp"
                     android:gravity="center"/>
                 <TextView
@@ -78,7 +78,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Item Seller Contact:"
+                android:text="@string/contact"
                 android:textSize="25sp"
                 android:gravity="center"/>
             <TextView
@@ -97,7 +97,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Item Quantity:"
+                android:text="@string/item_quantity"
                 android:textSize="25sp"
                 android:gravity="center"/>
             <TextView
@@ -117,7 +117,8 @@
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Remove"
+                android:text="@string/remove"
+                android:background="@color/colorAccent"
                 android:id="@+id/remove"
                 android:clickable="true"
                 android:gravity="center"
@@ -125,9 +126,11 @@
             <TextView
                 android:layout_weight="1"
                 android:layout_width="0dp"
+                android:layout_marginLeft="@dimen/marging_8"
                 android:layout_height="wrap_content"
-                android:text="Add"
+                android:text="@string/add"
                 android:id="@+id/add"
+                android:background="@color/colorAccent"
                 android:clickable="true"
                 android:gravity="center"
                 android:textSize="25sp"/>
@@ -135,15 +138,29 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="25dp">
+            android:orientation="vertical">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Order More"
+                android:text="@string/order_more"
                 android:clickable="true"
+                android:layout_marginTop="@dimen/marging_8"
+                android:background="@color/colorAccent"
                 android:id="@+id/order_more"
                 android:gravity="center_horizontal"
                 android:layout_gravity="bottom"
                 android:textSize="25sp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edit Item"
+                android:layout_marginTop="@dimen/marging_8"
+                android:clickable="true"
+                android:background="@color/colorAccent"
+                android:id="@+id/edit_item"
+                android:gravity="center_horizontal"
+                android:layout_gravity="bottom"
+                android:textSize="25sp"/>
         </LinearLayout>
+
     </LinearLayout>

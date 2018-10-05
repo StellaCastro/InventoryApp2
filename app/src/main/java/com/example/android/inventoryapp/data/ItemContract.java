@@ -7,11 +7,11 @@ import android.provider.BaseColumns;
 public class ItemContract {
     private ItemContract (){}
 
-    public static final String CONTENT_AUTHORITY = "com.example.android.inventoryApp";
+    public static final String CONTENT_AUTHORITY = "com.example.android.inventoryapp";
 
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
-    public static final String PATH_ITEM = "items";
+    public static final String PATH_ITEM = "item";
 
     public static final class ItemEntry implements BaseColumns {
 
