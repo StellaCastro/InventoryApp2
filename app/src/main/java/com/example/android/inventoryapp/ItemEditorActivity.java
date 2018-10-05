@@ -91,19 +91,26 @@ public class ItemEditorActivity extends AppCompatActivity
         String itemQuantity = itemQuantityEditText.getText().toString().trim();
         String itemSupplierName = itemSupplierNameEditText.getText().toString().trim();
         String itemSupplierContact = itemSupplierContactEditText.getText().toString().trim();
-        double price = Double.parseDouble(itemPrice);
-        int quantity = Integer.parseInt(itemQuantity);
 
-        if(mCurrentItemUri==null && TextUtils.isEmpty(itemName) && TextUtils.isEmpty(itemPrice)
-        && TextUtils.isEmpty(itemQuantity) && TextUtils.isEmpty(itemSupplierName)&& TextUtils.isEmpty(itemSupplierContact)){
+
+        if(mCurrentItemUri==null && TextUtils.isEmpty(itemName) || TextUtils.isEmpty(itemPrice)
+        && TextUtils.isEmpty(itemQuantity) || TextUtils.isEmpty(itemSupplierName)&& TextUtils.isEmpty(itemSupplierContact)){
+            Toast.makeText(this, "Iem was not saved, Item MUST have name, price, supplier, and phone number!",
+                    Toast.LENGTH_SHORT).show();
                 return;
         }
+        double price = Double.parseDouble(itemPrice);
+        int quantity = Integer.parseInt(itemQuantity);
         ContentValues values = new ContentValues();
         values.put(ItemEntry.COLUMN_ITEM_NAME, itemName);
         values.put(ItemEntry.COLUMN_ITEM_PRICE, price);
         values.put(ItemEntry.COLUMN_ITEM_QUANTITY, quantity);
         values.put(ItemEntry.COLUMN_ITEM_SELLER, itemSupplierName);
         values.put(ItemEntry.COLUMN_ITEM_CONTACT, itemSupplierContact);
+
+        if (quantity == 0) {
+            Toast.makeText(this, "Quantity of item is zero, would you like to change that?",
+                    Toast.LENGTH_SHORT).show();}
     //leting know the uset that the item was saved sucessfully
         if(mCurrentItemUri == null){
             Uri myNewUri = getContentResolver().insert(ItemEntry.CONTENT_URI, values);
