@@ -95,7 +95,7 @@ public class ItemEditorActivity extends AppCompatActivity
 
         if(mCurrentItemUri==null && TextUtils.isEmpty(itemName) || TextUtils.isEmpty(itemPrice)
         && TextUtils.isEmpty(itemQuantity) || TextUtils.isEmpty(itemSupplierName)&& TextUtils.isEmpty(itemSupplierContact)){
-            Toast.makeText(this, "Iem was not saved, Item MUST have name, price, supplier, and phone number!",
+            Toast.makeText(this, "Item was not saved, Item MUST have name, price, supplier, and phone number!",
                     Toast.LENGTH_SHORT).show();
                 return;
         }
