@@ -17,22 +17,33 @@ public class Item_viewer extends AppCompatActivity implements LoaderManager.Load
 
 
     private Uri myCurrentItemUri;
-    private TextView productName = (TextView)findViewById(R.id.product_name);
-    private TextView productPrice = (TextView)findViewById(R.id.price);
-    private TextView productSeller = (TextView)findViewById(R.id.seller);
-    private TextView productContact = (TextView)findViewById(R.id.phone);
-    private TextView productQuantity = (TextView)findViewById(R.id.quantity);
-    private TextView addMore = (TextView)findViewById(R.id.add);
-    private TextView remove = (TextView)findViewById(R.id.remove);
-    private TextView orderMore = (TextView)findViewById(R.id.order_more);
-    private TextView editItem = (TextView)findViewById(R.id.edit_item);
+    private TextView productName;
+    private TextView productPrice;
+    private TextView productSeller;
+    private TextView productContact;
+    private TextView productQuantity;
+    private TextView addMore;
+    private TextView remove;
+    private TextView orderMore;
+    private TextView editItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_viewer);
-        getActionBar().setDisplayShowHomeEnabled(true);
+      // getActionBar().setDisplayShowHomeEnabled(true);
         Intent intent = getIntent();
+
+
+        productName = (TextView)findViewById(R.id.product_name);
+        productPrice = (TextView)findViewById(R.id.price);
+        productSeller = (TextView)findViewById(R.id.seller);
+        productContact = (TextView)findViewById(R.id.phone);
+        productQuantity = (TextView)findViewById(R.id.quantity);
+        addMore = (TextView)findViewById(R.id.add);
+        remove = (TextView)findViewById(R.id.remove);
+        orderMore = (TextView)findViewById(R.id.order_more);
+        editItem = (TextView)findViewById(R.id.edit_item);
         myCurrentItemUri = intent.getData();
 
 
