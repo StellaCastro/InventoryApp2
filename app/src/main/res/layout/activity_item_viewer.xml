@@ -22,7 +22,6 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Item"
                 android:id="@+id/product_name"
                 android:textSize="25sp"
                 android:gravity="center"/>
@@ -45,7 +44,6 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="3.99"
                     android:id="@+id/price"
                     android:textSize="25sp"
                     android:gravity="center"/>
@@ -64,7 +62,6 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="StarCompany"
                     android:id="@+id/seller"
                     android:textSize="25sp"
                     android:gravity="center"/>
@@ -84,7 +81,6 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="7874774769"
                 android:id="@+id/phone"
                 android:textSize="25sp"
                 android:gravity="center"/>
@@ -103,7 +99,6 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="2"
                 android:id="@+id/quantity"
                 android:textSize="25sp"
                 android:gravity="center"/>
@@ -121,6 +116,7 @@
                 android:background="@color/colorAccent"
                 android:id="@+id/remove"
                 android:clickable="true"
+                android:focusable="true"
                 android:gravity="center"
                 android:textSize="25sp"/>
             <TextView
@@ -129,9 +125,10 @@
                 android:layout_marginLeft="@dimen/marging_8"
                 android:layout_height="wrap_content"
                 android:text="@string/add"
-                android:id="@+id/add"
+                android:id="@+id/add_more"
                 android:background="@color/colorAccent"
                 android:clickable="true"
+                android:focusable="true"
                 android:gravity="center"
                 android:textSize="25sp"/>
         </LinearLayout>
@@ -144,6 +141,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/order_more"
                 android:clickable="true"
+                android:focusable="true"
                 android:layout_marginTop="@dimen/marging_8"
                 android:background="@color/colorAccent"
                 android:id="@+id/order_more"
@@ -156,6 +154,7 @@
                 android:text="Edit Item"
                 android:layout_marginTop="@dimen/marging_8"
                 android:clickable="true"
+                android:focusable="true"
                 android:background="@color/colorAccent"
                 android:id="@+id/edit_item"
                 android:gravity="center_horizontal"

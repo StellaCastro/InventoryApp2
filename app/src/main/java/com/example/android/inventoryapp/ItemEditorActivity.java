@@ -94,9 +94,11 @@ public class ItemEditorActivity extends AppCompatActivity
         double price = Double.parseDouble(itemPrice);
         int quantity = Integer.parseInt(itemQuantity);
 
-        if(mCurrentItemUri==null && TextUtils.isEmpty(itemName) && TextUtils.isEmpty(itemPrice)
-        && TextUtils.isEmpty(itemQuantity) && TextUtils.isEmpty(itemSupplierName)&& TextUtils.isEmpty(itemSupplierContact)){
-                return;
+        if(mCurrentItemUri==null && TextUtils.isEmpty(itemName) || TextUtils.isEmpty(itemPrice)
+                && TextUtils.isEmpty(itemQuantity) || TextUtils.isEmpty(itemSupplierName)&& TextUtils.isEmpty(itemSupplierContact)){
+            Toast.makeText(this, "Iem was not saved, Item MUST have name, price, supplier, and phone number!",
+                    Toast.LENGTH_SHORT).show();
+            return;
         }
         ContentValues values = new ContentValues();
         values.put(ItemEntry.COLUMN_ITEM_NAME, itemName);
@@ -104,7 +106,7 @@ public class ItemEditorActivity extends AppCompatActivity
         values.put(ItemEntry.COLUMN_ITEM_QUANTITY, quantity);
         values.put(ItemEntry.COLUMN_ITEM_SELLER, itemSupplierName);
         values.put(ItemEntry.COLUMN_ITEM_CONTACT, itemSupplierContact);
-    //leting know the uset that the item was saved sucessfully
+    //letting know the uset that the item was saved sucessfully
         if(mCurrentItemUri == null){
             Uri myNewUri = getContentResolver().insert(ItemEntry.CONTENT_URI, values);
             if(myNewUri == null){
