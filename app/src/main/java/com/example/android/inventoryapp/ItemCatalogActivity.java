@@ -1,14 +1,17 @@
 package com.example.android.inventoryapp;
 
-import android.app.LoaderManager;
+
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.Loader;
+
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
+
+import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,7 +40,7 @@ public class ItemCatalogActivity extends AppCompatActivity implements LoaderMana
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ItemCatalogActivity.this, ItemEditorActivity.class);
+                Intent intent = new Intent(ItemCatalogActivity.this, Item_viewer.class);
                 startActivity(intent);
             }
         });
@@ -60,12 +63,12 @@ public class ItemCatalogActivity extends AppCompatActivity implements LoaderMana
             }
         });
 
-        getLoaderManager().initLoader(ITEM_LOADER, null, this);
+        getSupportLoaderManager().initLoader(ITEM_LOADER, null, this);
 
 
     }
     //inserting dummy data
-    private void insertPet (){
+    private void insertDummyData (){
 
         ContentValues values = new ContentValues ();
 
@@ -75,7 +78,7 @@ public class ItemCatalogActivity extends AppCompatActivity implements LoaderMana
         values.put(ItemEntry.COLUMN_ITEM_SELLER, "STELLA");
         values.put(ItemEntry.COLUMN_ITEM_CONTACT, "phone number");
 
-     Uri myNewUri = getContentResolver().insert(ItemEntry.CONTENT_URI, values);
+     getContentResolver().insert(ItemEntry.CONTENT_URI, values);
 
     }
     //setting up the delete option in the upbar
@@ -97,7 +100,7 @@ public class ItemCatalogActivity extends AppCompatActivity implements LoaderMana
         switch (item.getItemId()) {
             // Respond to a click on the "Insert dummy data" menu option
             case R.id.action_insert_dummy_item:
-                insertPet();
+                insertDummyData();
                 return true;
             // Respond to a click on the "Delete all" menu option
             case R.id.action_delete_all:
@@ -116,7 +119,7 @@ public class ItemCatalogActivity extends AppCompatActivity implements LoaderMana
                 ItemEntry.COLUMN_ITEM_PRICE,
                 ItemEntry.COLUMN_ITEM_QUANTITY };
 
-        return new android.content.CursorLoader(ItemCatalogActivity.this,
+        return new CursorLoader(ItemCatalogActivity.this,
                 ItemEntry.CONTENT_URI,
                 myProjection,
                 null,

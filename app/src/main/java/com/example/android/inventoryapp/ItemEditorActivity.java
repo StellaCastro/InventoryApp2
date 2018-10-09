@@ -23,12 +23,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.inventoryapp.data.ItemDbHelper;
 import com.example.android.inventoryapp.data.ItemContract.ItemEntry;
 
 public class ItemEditorActivity extends AppCompatActivity
+
         implements LoaderManager.LoaderCallbacks<Cursor> {
    //identifying the loader
    private static final int EXISTING_ITEM_LOADER = 0;
@@ -41,6 +43,7 @@ public class ItemEditorActivity extends AppCompatActivity
     private EditText itemQuantityEditText;
     private EditText itemSupplierNameEditText;
     private EditText itemSupplierContactEditText;
+
 
     private boolean mItemHasChanged = false;
     //setting up the touch listener
@@ -63,10 +66,12 @@ public class ItemEditorActivity extends AppCompatActivity
         if(mCurrentItemUri==null){
             setTitle(getString(R.string.add_item_title));
             invalidateOptionsMenu();
-        }else{
+        }else {
             setTitle(getString(R.string.edit_item_title));
-           getLoaderManager().initLoader(EXISTING_ITEM_LOADER, null, this);
+            getLoaderManager().initLoader(EXISTING_ITEM_LOADER, null, this);
         }
+
+
 
 
 
@@ -76,6 +81,7 @@ public class ItemEditorActivity extends AppCompatActivity
         itemQuantityEditText = (EditText)findViewById(R.id.item_quantity);
         itemSupplierNameEditText = (EditText)findViewById(R.id.item_supplier_name);
         itemSupplierContactEditText = (EditText)findViewById(R.id.item_supplier_contact);
+
         //setting touch listener on each editText in the layout
         itemNameEditText.setOnTouchListener(mTouchListener);
         itemPriceEditText.setOnTouchListener(mTouchListener);
@@ -96,7 +102,7 @@ public class ItemEditorActivity extends AppCompatActivity
 
         if(mCurrentItemUri==null && TextUtils.isEmpty(itemName) || TextUtils.isEmpty(itemPrice)
                 && TextUtils.isEmpty(itemQuantity) || TextUtils.isEmpty(itemSupplierName)&& TextUtils.isEmpty(itemSupplierContact)){
-            Toast.makeText(this, "Iem was not saved, Item MUST have name, price, supplier, and phone number!",
+            Toast.makeText(this, "Item was not saved, Item MUST have name, price, supplier, and phone number!",
                     Toast.LENGTH_SHORT).show();
             return;
         }
