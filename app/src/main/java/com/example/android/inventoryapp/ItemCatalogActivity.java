@@ -40,7 +40,7 @@ public class ItemCatalogActivity extends AppCompatActivity implements LoaderMana
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ItemCatalogActivity.this, Item_viewer.class);
+                Intent intent = new Intent(ItemCatalogActivity.this, ItemEditorActivity.class);
                 startActivity(intent);
             }
         });

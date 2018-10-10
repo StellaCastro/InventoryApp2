@@ -127,6 +127,7 @@ private static final int EXISTING_ITEM_LOADER = 0; {
                     Toast.LENGTH_SHORT).show();
             return;
         }
+
         ContentValues values = new ContentValues();
         values.put(ItemEntry.COLUMN_ITEM_NAME, itemName);
         values.put(ItemEntry.COLUMN_ITEM_PRICE, price);
@@ -171,7 +172,7 @@ private static final int EXISTING_ITEM_LOADER = 0; {
         switch (item.getItemId()) {
             case R.id.action_save:
                 saveItem();
-                finish();
+
                 return true;
             case R.id.action_delete:
                 showDeleteConfirmationDialog();
