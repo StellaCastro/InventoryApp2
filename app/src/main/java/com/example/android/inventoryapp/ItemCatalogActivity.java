@@ -76,7 +76,7 @@ public class ItemCatalogActivity extends AppCompatActivity implements LoaderMana
         values.put(ItemEntry.COLUMN_ITEM_PRICE, 3.99);
         values.put(ItemEntry.COLUMN_ITEM_QUANTITY, 2);
         values.put(ItemEntry.COLUMN_ITEM_SELLER, "STELLA");
-        values.put(ItemEntry.COLUMN_ITEM_CONTACT, "phone number");
+        values.put(ItemEntry.COLUMN_ITEM_CONTACT, "7874774769");
 
      getContentResolver().insert(ItemEntry.CONTENT_URI, values);
 

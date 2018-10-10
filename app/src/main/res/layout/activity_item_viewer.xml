@@ -160,6 +160,18 @@
                 android:gravity="center_horizontal"
                 android:layout_gravity="bottom"
                 android:textSize="25sp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Delete Item"
+                android:layout_marginTop="@dimen/marging_8"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@color/colorAccent"
+                android:id="@+id/delete_item"
+                android:gravity="center_horizontal"
+                android:layout_gravity="bottom"
+                android:textSize="25sp"/>
         </LinearLayout>
 
     </LinearLayout>

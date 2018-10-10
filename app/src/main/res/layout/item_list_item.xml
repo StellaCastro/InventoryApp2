@@ -80,7 +80,7 @@
             android:text="@string/sale"
             android:textColor="@color/black"
             android:id="@+id/object_sale"
-            android:focusable="true" />
+            android:focusable="false" />
 
     </LinearLayout>
     </LinearLayout>

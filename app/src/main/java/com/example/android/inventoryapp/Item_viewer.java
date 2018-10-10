@@ -14,6 +14,8 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,8 +42,9 @@ public class Item_viewer extends AppCompatActivity implements LoaderManager.Load
     private TextView remove;
     private TextView orderMore;
     private TextView editItem;
+    private TextView deleteItem;
 
-    //
+    //variables
     private String quantityVariable;
     private String nameVariable;
     private String priceVariable;
@@ -49,13 +52,14 @@ public class Item_viewer extends AppCompatActivity implements LoaderManager.Load
     private String contactVariable;
     private long idVariable;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_viewer);
 
 
-
+        //finding the view on the screen
         productName = (TextView)findViewById(R.id.product_name);
         productPrice = (TextView)findViewById(R.id.price);
         productSeller = (TextView)findViewById(R.id.seller);
@@ -65,6 +69,7 @@ public class Item_viewer extends AppCompatActivity implements LoaderManager.Load
         remove = (TextView)findViewById(R.id.remove);
         addMore = (TextView)findViewById(R.id.add_more);
         orderMore = (TextView)findViewById(R.id.order_more);
+        deleteItem = (TextView)findViewById(R.id.delete_item);
 
         if (savedInstanceState == null) {
             Intent intent = getIntent();
@@ -137,19 +142,16 @@ public class Item_viewer extends AppCompatActivity implements LoaderManager.Load
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:" + productContact));
+                intent.setData(Uri.parse("tel:" + contactVariable));
                 startActivity(intent);
             }
         });
-
-
-
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString(uri_item_key, myCurrentItemUri.toString());
+      deleteItem.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              deleteThisItem();
+          }
+      });
     }
 
     @Override
@@ -168,6 +170,7 @@ public class Item_viewer extends AppCompatActivity implements LoaderManager.Load
         idVariable = data.getLong(data.getColumnIndex(ItemEntry._ID));
         nameVariable = data.getString(data.getColumnIndex(ItemEntry.COLUMN_ITEM_NAME));
         priceVariable = data.getString(data.getColumnIndex(ItemEntry.COLUMN_ITEM_PRICE));
+        quantityVariable = data.getString(data.getColumnIndex(ItemEntry.COLUMN_ITEM_QUANTITY));
         supplierVariable = data.getString(data.getColumnIndex(ItemEntry.COLUMN_ITEM_SELLER));
         contactVariable = data.getString(data.getColumnIndex(ItemEntry.COLUMN_ITEM_CONTACT));
 
@@ -183,7 +186,7 @@ public class Item_viewer extends AppCompatActivity implements LoaderManager.Load
         productContact.setText("");
 
     }
-
+//populating the views on the screen
     private void placeData(){
         productName.setText(nameVariable);
         productPrice.setText(priceVariable);
@@ -191,7 +194,7 @@ public class Item_viewer extends AppCompatActivity implements LoaderManager.Load
         productSeller.setText(supplierVariable);
         productContact.setText(contactVariable);
     }
-
+//delete method
     private void deleteThisItem (){
         int itemDeleteRow = getContentResolver().delete(myCurrentItemUri, null, null);
 
@@ -203,5 +206,7 @@ public class Item_viewer extends AppCompatActivity implements LoaderManager.Load
         }
         finish();
     }
+
+
 
 }

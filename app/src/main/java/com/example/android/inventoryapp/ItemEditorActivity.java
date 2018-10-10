@@ -2,6 +2,7 @@ package com.example.android.inventoryapp;
 
 import android.app.AlertDialog;
 import android.app.LoaderManager;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
@@ -29,13 +30,12 @@ import android.widget.Toast;
 import com.example.android.inventoryapp.data.ItemDbHelper;
 import com.example.android.inventoryapp.data.ItemContract.ItemEntry;
 
-public class ItemEditorActivity extends AppCompatActivity
+public class ItemEditorActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+//identifying the loader
+private static final int EXISTING_ITEM_LOADER = 0; {
 
-        implements LoaderManager.LoaderCallbacks<Cursor> {
-   //identifying the loader
-   private static final int EXISTING_ITEM_LOADER = 0;
+    }
 
-   private Uri mCurrentItemUri;
 
     //Initializing the different editText
     private EditText itemNameEditText;
@@ -44,6 +44,14 @@ public class ItemEditorActivity extends AppCompatActivity
     private EditText itemSupplierNameEditText;
     private EditText itemSupplierContactEditText;
 
+    private String quantityVariable;
+    private String nameVariable;
+    private String priceVariable;
+    private String supplierVariable;
+    private String contactVariable;
+    private long idVariable;
+
+    private Uri mCurrentItemUri;
 
     private boolean mItemHasChanged = false;
     //setting up the touch listener
@@ -55,32 +63,18 @@ public class ItemEditorActivity extends AppCompatActivity
         }
     };
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_editor);
-    //receiving the intent information
-        Intent intent = getIntent();
-        mCurrentItemUri = intent.getData();
-        //changing tittle in the editor activity
-        if(mCurrentItemUri==null){
-            setTitle(getString(R.string.add_item_title));
-            invalidateOptionsMenu();
-        }else {
-            setTitle(getString(R.string.edit_item_title));
-            getLoaderManager().initLoader(EXISTING_ITEM_LOADER, null, this);
-        }
-
-
-
-
 
         //finding the views on the xml
-        itemNameEditText = (EditText)findViewById(R.id.item_name);
-        itemPriceEditText = (EditText)findViewById(R.id.item_price);
-        itemQuantityEditText = (EditText)findViewById(R.id.item_quantity);
-        itemSupplierNameEditText = (EditText)findViewById(R.id.item_supplier_name);
-        itemSupplierContactEditText = (EditText)findViewById(R.id.item_supplier_contact);
+        itemNameEditText = (EditText) findViewById(R.id.item_name);
+        itemPriceEditText = (EditText) findViewById(R.id.item_price);
+        itemQuantityEditText = (EditText) findViewById(R.id.item_quantity);
+        itemSupplierNameEditText = (EditText) findViewById(R.id.item_supplier_name);
+        itemSupplierContactEditText = (EditText) findViewById(R.id.item_supplier_contact);
 
         //setting touch listener on each editText in the layout
         itemNameEditText.setOnTouchListener(mTouchListener);
@@ -88,9 +82,36 @@ public class ItemEditorActivity extends AppCompatActivity
         itemQuantityEditText.setOnTouchListener(mTouchListener);
         itemSupplierNameEditText.setOnTouchListener(mTouchListener);
         itemSupplierContactEditText.setOnTouchListener(mTouchListener);
+
+
+        //receiving the intent information
+        Intent intent = getIntent();
+        Bundle itemInfo = intent.getExtras();
+        //changing tittle in the editor activity
+        if (itemInfo == null) {
+            setTitle(getString(R.string.add_item_title));
+            invalidateOptionsMenu();
+        } else {
+            setTitle(getString(R.string.edit_item_title));
+            idVariable = itemInfo.getLong(ItemEntry._ID);
+            nameVariable = itemInfo.getString(ItemEntry.COLUMN_ITEM_NAME);
+            priceVariable = itemInfo.getString(ItemEntry.COLUMN_ITEM_PRICE);
+            quantityVariable = itemInfo.getString(ItemEntry.COLUMN_ITEM_QUANTITY);
+            supplierVariable = itemInfo.getString(ItemEntry.COLUMN_ITEM_SELLER);
+            contactVariable = itemInfo.getString(ItemEntry.COLUMN_ITEM_CONTACT);
+
+            itemNameEditText.setText(nameVariable);
+            itemQuantityEditText.setText(quantityVariable);
+            itemPriceEditText.setText(priceVariable);
+            itemSupplierNameEditText.setText(supplierVariable);
+            itemSupplierContactEditText.setText(contactVariable);
+
+            getLoaderManager().initLoader(EXISTING_ITEM_LOADER, null, this);
+        }
     }
+
     //inserting the data inserted by the user into the database
-    private void saveItem () {
+    private void saveItem() {
 
         String itemName = itemNameEditText.getText().toString().trim();
         String itemPrice = itemPriceEditText.getText().toString().trim();
@@ -100,9 +121,9 @@ public class ItemEditorActivity extends AppCompatActivity
         double price = Double.parseDouble(itemPrice);
         int quantity = Integer.parseInt(itemQuantity);
 
-        if(mCurrentItemUri==null && TextUtils.isEmpty(itemName) || TextUtils.isEmpty(itemPrice)
-                && TextUtils.isEmpty(itemQuantity) || TextUtils.isEmpty(itemSupplierName)&& TextUtils.isEmpty(itemSupplierContact)){
-            Toast.makeText(this, "Item was not saved, Item MUST have name, price, supplier, and phone number!",
+        if (TextUtils.isEmpty(itemName) || TextUtils.isEmpty(itemPrice)
+                || TextUtils.isEmpty(itemQuantity) || TextUtils.isEmpty(itemSupplierName) || TextUtils.isEmpty(itemSupplierContact)) {
+            Toast.makeText(this, "Item was not saved, some info is missing!",
                     Toast.LENGTH_SHORT).show();
             return;
         }
@@ -112,45 +133,42 @@ public class ItemEditorActivity extends AppCompatActivity
         values.put(ItemEntry.COLUMN_ITEM_QUANTITY, quantity);
         values.put(ItemEntry.COLUMN_ITEM_SELLER, itemSupplierName);
         values.put(ItemEntry.COLUMN_ITEM_CONTACT, itemSupplierContact);
-    //letting know the uset that the item was saved sucessfully
-        if(mCurrentItemUri == null){
-            Uri myNewUri = getContentResolver().insert(ItemEntry.CONTENT_URI, values);
-            if(myNewUri == null){
-                Toast.makeText(this, R.string.cant_save, Toast.LENGTH_SHORT).show();
-            }else{
-                Toast.makeText(this, getString(R.string.save_sucessfull), Toast.LENGTH_SHORT).show();
-            }
-        }else{
+        //letting know the uset that the item was saved sucessfully
+        if (mCurrentItemUri == null) {
+            mCurrentItemUri = ContentUris.withAppendedId(ItemEntry.CONTENT_URI, idVariable);
             int rowsAffected = getContentResolver().update(mCurrentItemUri, values, null, null);
-            if(rowsAffected==0){
+            if (rowsAffected == 0) {
                 Toast.makeText(this, "Ups... we couldn't save changes", Toast.LENGTH_SHORT).show();
 
-            }else {
+            } else {
                 Toast.makeText(this, "Item Sucessfully updated", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        } else {
+            Uri myNewUri = getContentResolver().insert(ItemEntry.CONTENT_URI, values);
+            if (myNewUri == null) {
+                Toast.makeText(this, R.string.cant_save, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, getString(R.string.save_sucessfull), Toast.LENGTH_SHORT).show();
+                finish();
             }
         }
 
     }
+
+
+
     //setting up the menu in the upbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.item_menu_editor, menu);
         return true;
     }
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-        // If this is a new pet, hide the "Delete" menu item.
-        if (mCurrentItemUri == null) {
-            MenuItem menuItem = menu.findItem(R.id.action_delete);
-            menuItem.setVisible(false);
-        }
-        return true;
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_save:
                 saveItem();
                 finish();
@@ -160,7 +178,7 @@ public class ItemEditorActivity extends AppCompatActivity
                 return true;
             case android.R.id.home:
                 // Navigate back to parent activity (CatalogActivity)
-                if(!mItemHasChanged){
+                if (!mItemHasChanged) {
                     NavUtils.navigateUpFromSameTask(this);
                     return true;
                 }
@@ -177,6 +195,7 @@ public class ItemEditorActivity extends AppCompatActivity
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     public void onBackPressed() {
@@ -201,7 +220,75 @@ public class ItemEditorActivity extends AppCompatActivity
         showUnsavedChangesDialog(discardButtonClickListener);
     }
 
-    @NonNull
+
+    private void showUnsavedChangesDialog(
+            DialogInterface.OnClickListener discardButtonClickListener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Discard changes and quit editing");
+        builder.setPositiveButton("Discard", discardButtonClickListener);
+        builder.setNegativeButton("Keep editing", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    private void showDeleteConfirmationDialog() {
+        // Create an AlertDialog.Builder and set the message, and click listeners
+        // for the postivie and negative buttons on the dialog.
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Delete this Item");
+        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Delete" button, so delete the item.
+                deleteItem();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Cancel" button, so dismiss the dialog
+                // and continue editing the item.
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    private void deleteItem() {
+        // Only perform the delete if this is an existing items
+        if (mCurrentItemUri != null) {
+            // Call the ContentResolver to delete the pet at the given content URI.
+            // Pass in null for the selection and selection args because the mCurrentItemUri
+            // content URI already identifies the pet that we want.
+            int rowsDeleted = getContentResolver().delete(mCurrentItemUri, null, null);
+
+            // Show a toast message depending on whether or not the delete was successful.
+            if (rowsDeleted == 0) {
+                // If no rows were deleted, then there was an error with the delete.
+                Toast.makeText(this, "Error Occurred... deleting unsuccessful",
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                // Otherwise, the delete was successful and we can display a toast.
+                Toast.makeText(this, "Item Deleted",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        // Close the activity
+        finish();
+    }
+
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
 
@@ -262,70 +349,5 @@ public class ItemEditorActivity extends AppCompatActivity
         itemSupplierNameEditText.setText("");
         itemSupplierContactEditText.setText("");
     }
-
-    private void showUnsavedChangesDialog(
-            DialogInterface.OnClickListener discardButtonClickListener) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Discard changes and quit editing");
-        builder.setPositiveButton("Discard", discardButtonClickListener);
-        builder.setNegativeButton("Keep editing", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                if (dialog != null) {
-                    dialog.dismiss();
-                }
-            }
-        });
-
-        // Create and show the AlertDialog
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
-    private void showDeleteConfirmationDialog() {
-        // Create an AlertDialog.Builder and set the message, and click listeners
-        // for the postivie and negative buttons on the dialog.
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Delete this Item");
-        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // User clicked the "Delete" button, so delete the item.
-                deleteItem();
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // User clicked the "Cancel" button, so dismiss the dialog
-                // and continue editing the item.
-                if (dialog != null) {
-                    dialog.dismiss();
-                }
-            }
-        });
-
-        // Create and show the AlertDialog
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
-    private void deleteItem() {
-        // Only perform the delete if this is an existing items
-        if (mCurrentItemUri != null) {
-            // Call the ContentResolver to delete the pet at the given content URI.
-            // Pass in null for the selection and selection args because the mCurrentPetUri
-            // content URI already identifies the pet that we want.
-            int rowsDeleted = getContentResolver().delete(mCurrentItemUri, null, null);
-
-            // Show a toast message depending on whether or not the delete was successful.
-            if (rowsDeleted == 0) {
-                // If no rows were deleted, then there was an error with the delete.
-                Toast.makeText(this, "Error Occurred... deleting unsuccessful",
-                        Toast.LENGTH_SHORT).show();
-            } else {
-                // Otherwise, the delete was successful and we can display a toast.
-                Toast.makeText(this, "Item Deleted",
-                        Toast.LENGTH_SHORT).show();
-            }
-        }
-
-        // Close the activity
-        finish();
-    }
 }
+
