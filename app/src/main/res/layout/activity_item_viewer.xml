@@ -1,30 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_margin="@dimen/margin16"
     android:orientation="vertical"
-    tools:context=".Item_viewer">
-
+    tools:context=".Item_viewer"
+    android:background="@color/baby_blue">
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin16"
-            android:orientation="vertical">
+            style="@style/viewer_item_parents"
+            android:layout_marginBottom="@dimen/margin16">
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/item_name"
-                android:textSize="25sp"
-                android:gravity="center"/>
+                style="@style/viewer_item_titles"
+                android:text="@string/item_name"/>
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/viewer_item_info"
                 android:id="@+id/product_name"
-                android:textSize="25sp"
-                android:gravity="center"/>
+                />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,146 +23,89 @@
             android:orientation="horizontal">
             <LinearLayout
                 android:layout_weight="1"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/item_price"
-                    android:textSize="25sp"
-                    android:gravity="center"/>
+                    style="@style/viewer_item_titles"
+                    android:text="@string/item_price" />
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/price"
-                    android:textSize="25sp"
-                    android:gravity="center"/>
+                    style="@style/viewer_item_info"
+                    android:id="@+id/price" />
             </LinearLayout>
             <LinearLayout
                 android:layout_weight="1"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/item_seller"
-                    android:textSize="25sp"
-                    android:gravity="center"/>
+                    style="@style/viewer_item_titles"
+                    android:text="@string/item_seller"/>
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/seller"
-                    android:textSize="25sp"
-                    android:gravity="center"/>
+                    style="@style/viewer_item_info"
+                    android:id="@+id/seller" />
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:orientation="vertical">
+            style="@style/viewer_item_parents"
+            android:layout_marginTop="@dimen/margin_25">
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/contact"
-                android:textSize="25sp"
-                android:gravity="center"/>
+                style="@style/viewer_item_titles"
+                android:text="@string/contact" />
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/phone"
-                android:textSize="25sp"
-                android:gravity="center"/>
+                style="@style/viewer_item_info"
+                android:id="@+id/phone" />
+        </LinearLayout>
+        <LinearLayout
+            style="@style/viewer_item_parents"
+            android:layout_marginTop="@dimen/margin_25">
+            <TextView
+                style="@style/viewer_item_titles"
+                android:text="@string/item_quantity" />
+            <TextView
+                style="@style/viewer_item_info"
+                android:id="@+id/quantity" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:orientation="vertical">
+            android:layout_marginTop="@dimen/margin_25">
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/item_quantity"
-                android:textSize="25sp"
-                android:gravity="center"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/quantity"
-                android:textSize="25sp"
-                android:gravity="center"/>
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp">
-            <TextView
+                style="@style/button_item_viewer"
                 android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/zero"
                 android:text="@string/remove"
-                android:background="@color/colorAccent"
-                android:id="@+id/remove"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:textSize="25sp"/>
+                android:id="@+id/remove" />
             <TextView
+                style="@style/button_item_viewer"
                 android:layout_weight="1"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero"
                 android:layout_marginLeft="@dimen/marging_8"
-                android:layout_height="wrap_content"
                 android:text="@string/add"
-                android:id="@+id/add_more"
-                android:background="@color/colorAccent"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:textSize="25sp"/>
+                android:id="@+id/add_more" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
             <TextView
+                style="@style/button_item_viewer"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:text="@string/order_more"
-                android:clickable="true"
-                android:focusable="true"
                 android:layout_marginTop="@dimen/marging_8"
-                android:background="@color/colorAccent"
-                android:id="@+id/order_more"
-                android:gravity="center_horizontal"
-                android:layout_gravity="bottom"
-                android:textSize="25sp"/>
+                android:id="@+id/order_more" />
             <TextView
+                style="@style/button_item_viewer"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:text="Edit Item"
                 android:layout_marginTop="@dimen/marging_8"
-                android:clickable="true"
-                android:focusable="true"
-                android:background="@color/colorAccent"
-                android:id="@+id/edit_item"
-                android:gravity="center_horizontal"
-                android:layout_gravity="bottom"
-                android:textSize="25sp"/>
+                android:id="@+id/edit_item" />
             <TextView
+                style="@style/button_item_viewer"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:text="Delete Item"
                 android:layout_marginTop="@dimen/marging_8"
-                android:clickable="true"
-                android:focusable="true"
-                android:background="@color/colorAccent"
-                android:id="@+id/delete_item"
-                android:gravity="center_horizontal"
-                android:layout_gravity="bottom"
-                android:textSize="25sp"/>
+                android:id="@+id/delete_item" />
         </LinearLayout>
 
     </LinearLayout>

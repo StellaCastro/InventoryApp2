@@ -19,4 +19,5 @@
     <string name="item_price">Item Price:</string>
     <string name="item_name">Item Name:</string>
     <string name="sale">Sale</string>
+    <string name="quantity">Quantity</string>
 </resources>

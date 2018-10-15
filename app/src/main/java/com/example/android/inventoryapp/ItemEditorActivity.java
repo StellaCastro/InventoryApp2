@@ -118,8 +118,7 @@ private static final int EXISTING_ITEM_LOADER = 0; {
         String itemQuantity = itemQuantityEditText.getText().toString().trim();
         String itemSupplierName = itemSupplierNameEditText.getText().toString().trim();
         String itemSupplierContact = itemSupplierContactEditText.getText().toString().trim();
-        double price = Double.parseDouble(itemPrice);
-        int quantity = Integer.parseInt(itemQuantity);
+
 
         if (TextUtils.isEmpty(itemName) || TextUtils.isEmpty(itemPrice)
                 || TextUtils.isEmpty(itemQuantity) || TextUtils.isEmpty(itemSupplierName) || TextUtils.isEmpty(itemSupplierContact)) {
@@ -130,34 +129,31 @@ private static final int EXISTING_ITEM_LOADER = 0; {
 
         ContentValues values = new ContentValues();
         values.put(ItemEntry.COLUMN_ITEM_NAME, itemName);
-        values.put(ItemEntry.COLUMN_ITEM_PRICE, price);
-        values.put(ItemEntry.COLUMN_ITEM_QUANTITY, quantity);
+        values.put(ItemEntry.COLUMN_ITEM_PRICE, itemPrice);
+        values.put(ItemEntry.COLUMN_ITEM_QUANTITY, itemQuantity);
         values.put(ItemEntry.COLUMN_ITEM_SELLER, itemSupplierName);
         values.put(ItemEntry.COLUMN_ITEM_CONTACT, itemSupplierContact);
         //letting know the uset that the item was saved sucessfully
-        if (mCurrentItemUri == null) {
-            mCurrentItemUri = ContentUris.withAppendedId(ItemEntry.CONTENT_URI, idVariable);
-            int rowsAffected = getContentResolver().update(mCurrentItemUri, values, null, null);
-            if (rowsAffected == 0) {
-                Toast.makeText(this, "Ups... we couldn't save changes", Toast.LENGTH_SHORT).show();
+            if (mCurrentItemUri == null) {
+                Uri myNewUri = getContentResolver().insert(ItemEntry.CONTENT_URI, values);
+                if (myNewUri == null) {
+                    Toast.makeText(this, R.string.cant_save, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, getString(R.string.save_sucessfull), Toast.LENGTH_SHORT).show();
 
+                }
             } else {
-                Toast.makeText(this, "Item Sucessfully updated", Toast.LENGTH_SHORT).show();
-                finish();
+                int rowsAffected = getContentResolver().update(mCurrentItemUri, values, null, null);
+                if (rowsAffected == 0) {
+                    Toast.makeText(this, "Ups... we couldn't save changes", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(this, "Item Sucessfully updated", Toast.LENGTH_SHORT).show();
+
+                }
             }
-        } else {
-            Uri myNewUri = getContentResolver().insert(ItemEntry.CONTENT_URI, values);
-            if (myNewUri == null) {
-                Toast.makeText(this, R.string.cant_save, Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, getString(R.string.save_sucessfull), Toast.LENGTH_SHORT).show();
-                finish();
-            }
+            finish();
         }
-
-    }
-
-
 
     //setting up the menu in the upbar
     @Override

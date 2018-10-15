@@ -2,4 +2,15 @@
 <resources>
     <dimen name="margin16">16dp</dimen>
     <dimen name="marging_8">8dp</dimen>
+    <dimen name="zero">0dp</dimen>
+    <dimen name="margin_25">25dp</dimen>
+    <dimen name="ts_25">25sp</dimen>
+    <dimen name="ts_20">20sp</dimen>
+    <dimen name="bug_w">244dp</dimen>
+    <dimen name="bug_h">198dp</dimen>
+    <dimen name="margin26">26dp</dimen>
+    <dimen name="divider">1dp</dimen>
+    <dimen name="fabw">56dp</dimen>
+    <dimen name="fabh">56dp</dimen>
+    <dimen name="margin26">26dp</dimen>
 </resources>

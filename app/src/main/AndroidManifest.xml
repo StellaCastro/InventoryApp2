@@ -19,10 +19,13 @@
         </activity>
         <activity
             android:name=".Item_viewer"
-            android:label="Item Viewer">
+            android:label="Item Viewer"
+            android:parentActivityName=".ItemCatalogActivity">
         </activity>
         <activity
-            android:name=".ItemEditorActivity">
+            android:name=".ItemEditorActivity"
+            android:parentActivityName=".ItemCatalogActivity">
+
         </activity>
         <provider
             android:authorities="com.example.android.inventoryapp"
