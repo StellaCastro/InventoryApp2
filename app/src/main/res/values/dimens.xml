@@ -12,5 +12,4 @@
     <dimen name="divider">1dp</dimen>
     <dimen name="fabw">56dp</dimen>
     <dimen name="fabh">56dp</dimen>
-    <dimen name="margin26">26dp</dimen>
 </resources>
