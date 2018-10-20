@@ -2,7 +2,6 @@ package com.example.android.inventoryapp;
 
 import android.app.AlertDialog;
 import android.app.LoaderManager;
-import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
@@ -20,22 +19,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.android.inventoryapp.data.ItemDbHelper;
 import com.example.android.inventoryapp.data.ItemContract.ItemEntry;
 
 public class ItemEditorActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 //identifying the loader
-private static final int EXISTING_ITEM_LOADER = 0; {
-
-    }
-
+private static final int EXISTING_ITEM_LOADER = 0; { }
 
     //Initializing the different editText
     private EditText itemNameEditText;
@@ -43,17 +33,9 @@ private static final int EXISTING_ITEM_LOADER = 0; {
     private EditText itemQuantityEditText;
     private EditText itemSupplierNameEditText;
     private EditText itemSupplierContactEditText;
-
-    private String quantityVariable;
-    private String nameVariable;
-    private String priceVariable;
-    private String supplierVariable;
-    private String contactVariable;
-    private long idVariable;
-
     private Uri mCurrentItemUri;
-
     private boolean mItemHasChanged = false;
+
     //setting up the touch listener
     private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
         @Override
@@ -63,11 +45,15 @@ private static final int EXISTING_ITEM_LOADER = 0; {
         }
     };
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_editor);
+
+        //receiving the intent information
+        Intent intent = getIntent();
+        mCurrentItemUri = intent.getData();
+
 
         //finding the views on the xml
         itemNameEditText = (EditText) findViewById(R.id.item_name);
@@ -83,29 +69,12 @@ private static final int EXISTING_ITEM_LOADER = 0; {
         itemSupplierNameEditText.setOnTouchListener(mTouchListener);
         itemSupplierContactEditText.setOnTouchListener(mTouchListener);
 
-
-        //receiving the intent information
-        Intent intent = getIntent();
-        Bundle itemInfo = intent.getExtras();
         //changing tittle in the editor activity
-        if (itemInfo == null) {
+        if (mCurrentItemUri == null) {
             setTitle(getString(R.string.add_item_title));
             invalidateOptionsMenu();
         } else {
             setTitle(getString(R.string.edit_item_title));
-            idVariable = itemInfo.getLong(ItemEntry._ID);
-            nameVariable = itemInfo.getString(ItemEntry.COLUMN_ITEM_NAME);
-            priceVariable = itemInfo.getString(ItemEntry.COLUMN_ITEM_PRICE);
-            quantityVariable = itemInfo.getString(ItemEntry.COLUMN_ITEM_QUANTITY);
-            supplierVariable = itemInfo.getString(ItemEntry.COLUMN_ITEM_SELLER);
-            contactVariable = itemInfo.getString(ItemEntry.COLUMN_ITEM_CONTACT);
-
-            itemNameEditText.setText(nameVariable);
-            itemQuantityEditText.setText(quantityVariable);
-            itemPriceEditText.setText(priceVariable);
-            itemSupplierNameEditText.setText(supplierVariable);
-            itemSupplierContactEditText.setText(contactVariable);
-
             getLoaderManager().initLoader(EXISTING_ITEM_LOADER, null, this);
         }
     }
@@ -133,22 +102,21 @@ private static final int EXISTING_ITEM_LOADER = 0; {
         values.put(ItemEntry.COLUMN_ITEM_QUANTITY, itemQuantity);
         values.put(ItemEntry.COLUMN_ITEM_SELLER, itemSupplierName);
         values.put(ItemEntry.COLUMN_ITEM_CONTACT, itemSupplierContact);
-        //letting know the uset that the item was saved sucessfully
+
+        //letting know the user that the item was saved successfully
             if (mCurrentItemUri == null) {
                 Uri myNewUri = getContentResolver().insert(ItemEntry.CONTENT_URI, values);
                 if (myNewUri == null) {
                     Toast.makeText(this, R.string.cant_save, Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, getString(R.string.save_sucessfull), Toast.LENGTH_SHORT).show();
-
                 }
             } else {
                 int rowsAffected = getContentResolver().update(mCurrentItemUri, values, null, null);
                 if (rowsAffected == 0) {
-                    Toast.makeText(this, "Ups... we couldn't save changes", Toast.LENGTH_SHORT).show();
-
+                    Toast.makeText(this, R.string.save_unsecessful, Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(this, "Item Sucessfully updated", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.updated, Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -162,13 +130,11 @@ private static final int EXISTING_ITEM_LOADER = 0; {
         return true;
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save:
                 saveItem();
-
                 return true;
             case R.id.action_delete:
                 showDeleteConfirmationDialog();
@@ -196,7 +162,7 @@ private static final int EXISTING_ITEM_LOADER = 0; {
 
     @Override
     public void onBackPressed() {
-        // If the pet hasn't changed, continue with handling back button press
+        // If the item hasn't changed, continue with handling back button press
         if (!mItemHasChanged) {
             super.onBackPressed();
             return;
@@ -265,19 +231,19 @@ private static final int EXISTING_ITEM_LOADER = 0; {
     private void deleteItem() {
         // Only perform the delete if this is an existing items
         if (mCurrentItemUri != null) {
-            // Call the ContentResolver to delete the pet at the given content URI.
+            // Call the ContentResolver to delete the item at the given content URI.
             // Pass in null for the selection and selection args because the mCurrentItemUri
-            // content URI already identifies the pet that we want.
+            // content URI already identifies the item that we want.
             int rowsDeleted = getContentResolver().delete(mCurrentItemUri, null, null);
 
             // Show a toast message depending on whether or not the delete was successful.
             if (rowsDeleted == 0) {
                 // If no rows were deleted, then there was an error with the delete.
-                Toast.makeText(this, "Error Occurred... deleting unsuccessful",
+                Toast.makeText(this, R.string.deleting_unsucessful,
                         Toast.LENGTH_SHORT).show();
             } else {
                 // Otherwise, the delete was successful and we can display a toast.
-                Toast.makeText(this, "Item Deleted",
+                Toast.makeText(this, R.string.deleted,
                         Toast.LENGTH_SHORT).show();
             }
         }
@@ -324,16 +290,15 @@ private static final int EXISTING_ITEM_LOADER = 0; {
 
             String name = data.getString(nameColumnIndex);
             double price = data.getDouble(priceColumnIndex);
-            int quantity = data.getInt(quantityColumnIndex);
+            String quantity = data.getString(quantityColumnIndex);
             String seller = data.getString(sellerColumnIndex);
             float contact = data.getFloat(contactColumnIndex);
 
             itemNameEditText.setText(name);
             itemPriceEditText.setText(Double.toString(price));
-            itemQuantityEditText.setText(Integer.toString(quantity));
+            itemQuantityEditText.setText(quantity);
             itemSupplierNameEditText.setText(seller);
             itemSupplierContactEditText.setText(Float.toString(contact));
-
 
         }
     }

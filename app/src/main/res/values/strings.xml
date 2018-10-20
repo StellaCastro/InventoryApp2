@@ -4,11 +4,11 @@
     <string name="delete_all">Delete all</string>
     <string name="delete">Delete</string>
     <string name="save">save</string>
-    <string name="cant_save">Ups... we couldn\'t save data</string>
-    <string name="save_sucessfull">Item successfully save with id:</string>
+    <string name="cant_save">Ups, we can not save data</string>
+    <string name="save_sucessfull">Item successfully save</string>
     <string name="add_item_title">Add Item</string>
     <string name="edit_item_title">Edit Item</string>
-    <string name="empty_messege">Lots of bugs in the warehouse</string>
+    <string name="empty_messege">Your storage is empty</string>
     <string name="lets_start">Let\'s start adding some items</string>
     <string name="order_more">Order More</string>
     <string name="add">Add</string>
@@ -20,4 +20,18 @@
     <string name="item_name">Item Name:</string>
     <string name="sale">Sale</string>
     <string name="quantity">Quantity</string>
+    <string name="cant_add">ups can not change quantity</string>
+    <string name="cant_change_quantity">ups, can not change quantity</string>
+    <string name="out_of_stock">Item out of stock</string>
+    <string name="error_deleting">Error deleting Item</string>
+    <string name="deleted">Item deleted</string>
+    <string name="deleting_unsucessful">Error Occurred, deleting unsuccessful</string>
+    <string name="name">Name</string>
+    <string name="contact_number">Contact Number</string>
+    <string name="supplier">Supplier</string>
+    <string name="quantity_on_hand">Quantity on hand</string>
+    <string name="price">Price</string>
+    <string name="save_unsecessful">Ups, we can not save changes</string>
+    <string name="updated">Item Successfully updated</string>
+
 </resources>

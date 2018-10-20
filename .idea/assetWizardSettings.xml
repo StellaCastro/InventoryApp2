@@ -33,7 +33,11 @@
                                   </option>
                                   <option name="values">
                                     <map>
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="C:\Users\stell\Desktop\web.gif" />
+                                      <entry key="outputName" value="web" />
                                       <entry key="theme" value="CUSTOM" />
+                                      <entry key="themeColor" value="050505" />
                                     </map>
                                   </option>
                                 </PersistentState>

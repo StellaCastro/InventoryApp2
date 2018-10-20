@@ -4,11 +4,9 @@ package com.example.android.inventoryapp;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
-
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
-
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -20,9 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
 import com.example.android.inventoryapp.data.ItemContract.ItemEntry;
-import com.example.android.inventoryapp.data.ItemDbHelper;
+
 
 public class ItemCatalogActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 //naming the loader
@@ -62,29 +59,24 @@ public class ItemCatalogActivity extends AppCompatActivity implements LoaderMana
                 startActivity(myIntent);
             }
         });
-
         getSupportLoaderManager().initLoader(ITEM_LOADER, null, this);
-
-
     }
     //inserting dummy data
     private void insertDummyData (){
 
         ContentValues values = new ContentValues ();
-
-        values.put(ItemEntry.COLUMN_ITEM_NAME, "Toto");
+        values.put(ItemEntry.COLUMN_ITEM_NAME, "Coffee");
         values.put(ItemEntry.COLUMN_ITEM_PRICE, 3.99);
-        values.put(ItemEntry.COLUMN_ITEM_QUANTITY, 2);
+        values.put(ItemEntry.COLUMN_ITEM_QUANTITY, 10);
         values.put(ItemEntry.COLUMN_ITEM_SELLER, "STELLA");
         values.put(ItemEntry.COLUMN_ITEM_CONTACT, "7874774769");
-
-     getContentResolver().insert(ItemEntry.CONTENT_URI, values);
-
+        getContentResolver().insert(ItemEntry.CONTENT_URI, values);
     }
+
     //setting up the delete option in the upbar
     private void deleteAllItems() {
         int rowsDeleted = getContentResolver().delete(ItemEntry.CONTENT_URI, null, null);
-        Log.v("CatalogActivity", rowsDeleted + " rows deleted from pet database");
+        Log.v("ItemCatalogActivity", rowsDeleted + " rows deleted from item database");
     }
 
     //displaying the upbar menu options
@@ -109,6 +101,7 @@ public class ItemCatalogActivity extends AppCompatActivity implements LoaderMana
         }
         return super.onOptionsItemSelected(item);
     }
+
     //setting up the cursor loader and its other methods
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -125,7 +118,6 @@ public class ItemCatalogActivity extends AppCompatActivity implements LoaderMana
                 null,
                 null,
                 null);
-
     }
 
     @Override
